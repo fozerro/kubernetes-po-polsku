@@ -23,30 +23,58 @@ spec:
         - containerPort: 22
           name: ssh
 
-#        env:
-#        - name: USER_UID
-#          value: "1000"
-#        - name: USER_GID
-#          value: "1000"
-
         readinessProbe:
           httpGet:
             path: /
             port: 3000
           initialDelaySeconds: 10
           periodSeconds: 3
-        
-        envFrom:
-        - configMapRef:
-            name: gitea-config
-#
+
 #        # custom app.ini
 #        # WARNING - this makes configuration impossible from web interface!
         volumeMounts:
         - name: custom-conf
           mountPath: /data/gitea/conf/
+        - name: plik-config-map
+          mountPath: /data/gitea/plikMap/
 #        
       volumes:
       - name: custom-conf
         configMap:
           name: gitea-config-file
+      - name: plik-config-map
+        configMap:
+          name: app-conf
+          items:
+            - key: kibana
+              path: kibana.ini
+            - key: git
+              path: git.yaml
+---
+apiVersion: v1
+data:
+  APP_NAME: "My awesome GIT server!!!"
+  #DISABLE_REGISTRATION: "true"
+  #LOCAL_ROOT_URL: "http://gitea.192.168.99.100.nip.io"
+  USER_UID: "1000"
+  USER_GID: "1000"
+  kibana: |
+    APP_NAME = gitea
+    RUN_MODE = dev
+
+    [repository]
+    ROOT = /data/git/repositories
+
+  git: |
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: gitea-config-file
+      labels:
+          app: gitea
+
+kind: ConfigMap
+metadata:
+  name: app-conf
+  labels:
+    app: gitea

@@ -1,15 +1,21 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    kubernetes.io/ingress.class: "nginx"
+#    nginx.ingress.kubernetes.io/auth-url: https://httpbin.org/basic-auth/rick/M0rty
+
   name: fussy
 spec:
   rules:
-  - host: fussy-app.192.168.99.100.nip.io
+  - host: kubernetes.docker.internal
     http:
       paths:
-      - backend:
-          serviceName: fussy
-          servicePort: 80
-        path: /
+       - path: /
+         pathType: Prefix
+         backend:
+           service:
+             name: fussy
+             port:
+               number: 80

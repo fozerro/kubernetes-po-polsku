@@ -1,0 +1,16 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-dynamic
+  labels:
+    type: host
+spec:
+  # set to empty to disable dynamic provisioning using StorageClass
+  storageClassName: "standard"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 250Mi
+
+#przez to ze jest standard to uzyje storageClass "standard" i stworzy PV takie, storageClass standard zostalo wczesniej stworzone.

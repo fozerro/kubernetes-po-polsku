@@ -4,7 +4,7 @@ metadata:
   name: nfs-server
 spec:
   # change if your minikube/kubernetes cluster has different IP address service pool
-  clusterIP: 10.96.100.100
+  clusterIP: 10.96.0.100
   ports:
     - name: nfs
       port: 2049

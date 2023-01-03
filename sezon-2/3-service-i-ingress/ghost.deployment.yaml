@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+  namespace: g1
+  labels:
+    app: ghost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghost
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      containers:
+        - name: ghost
+          image: ghost
+          env:
+            - name: NODE_ENV
+              value: development
+#          ports:
+#            - containerPort: 8080

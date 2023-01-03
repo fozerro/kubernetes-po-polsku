@@ -1,15 +1,19 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    kubernetes.io/ingress.class: "nginx"
   name: fussy
 spec:
   rules:
   - host: gitea.192.168.99.100.nip.io
     http:
       paths:
-      - backend:
-          serviceName: gitea
-          servicePort: 3000
-        path: /
+       - path: /
+         pathType: Prefix
+         backend:
+          service:
+            name: gitea
+            port:
+              name: web

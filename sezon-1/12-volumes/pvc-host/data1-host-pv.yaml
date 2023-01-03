@@ -24,3 +24,4 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/volumes/vol2"
+

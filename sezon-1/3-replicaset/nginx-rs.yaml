@@ -1,9 +1,9 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: nginxrs
   labels:
-    app: nginx
+    app: nginxuuu
 spec:
   replicas: 1
   selector:

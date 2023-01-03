@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: fussy-rs
@@ -19,3 +19,4 @@ spec:
         image: cloudowski/fussy-container
         ports:
         - containerPort: 8080
+          name: web
